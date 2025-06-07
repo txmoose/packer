@@ -24,7 +24,7 @@ source "proxmox-iso" "ubuntu-server-noble" {
   # insecure_skip_tls_verify = true
 
   # VM General Settings
-  node                 = "proxmox"
+  node                 = "hive"
   vm_id                = "1001"
   vm_name              = "tmpl-ubuntu-2404"
   template_description = "Ubuntu Server Noble Image"
@@ -32,7 +32,7 @@ source "proxmox-iso" "ubuntu-server-noble" {
   # VM OS Settings
   boot_iso {
     type             = "scsi"
-    iso_file         = "iso/ubuntu-24.04.2-live-server-amd64.iso"
+    iso_file         = "local:iso/ubuntu-24.04.2-live-server-amd64.iso"
     unmount          = true
     iso_storage_pool = "local"
   }
@@ -45,9 +45,9 @@ source "proxmox-iso" "ubuntu-server-noble" {
 
   disks {
     disk_size    = "25G"
-    format       = "qcow2"
+    format       = "raw"
     storage_pool = "local-lvm"
-    type         = "virtio"
+    type         = "scsi"
   }
 
 
@@ -76,6 +76,7 @@ source "proxmox-iso" "ubuntu-server-noble" {
   # VM Cloud-Init Settings
   cloud_init              = true
   cloud_init_storage_pool = "local-lvm"
+  cloud_init_disk_type = "scsi"
 
   # PACKER Boot Commands
   boot         = "c"

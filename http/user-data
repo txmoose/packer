@@ -22,10 +22,10 @@ autoinstall:
     package_upgrade: true
     timezone: America/New_York
     users:
-      - name: txmoose
+      - name: kyle
         groups: [adm, sudo]
         lock-passwd: false
         sudo: ALL=(ALL) NOPASSWD:ALL
         shell: /bin/bash
         ssh_authorized_keys:
-          - your-ssh-public-key-here
+          - ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPADOfsqekq8/VFlE+hRsgSQ2eIKGP7vi2k50naOmrzZ op-ssh-key
