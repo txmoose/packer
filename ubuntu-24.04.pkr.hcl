@@ -27,7 +27,9 @@ source "proxmox-iso" "ubuntu-server-noble" {
   node                 = "hive"
   vm_id                = "1001"
   vm_name              = "tmpl-ubuntu-2404"
+  template_name        = "tmpl-ubuntu-2404"
   template_description = "Ubuntu Server Noble Image"
+  tags                 = ["template"]
 
   # VM OS Settings
   boot_iso {
@@ -36,6 +38,13 @@ source "proxmox-iso" "ubuntu-server-noble" {
     unmount          = true
     iso_storage_pool = "local"
   }
+
+  # VM CPU Type Settings
+  cpu_type = "host" # Use the host CPU type for better performance
+
+  # VM OS Type Settings
+  os_type    = "l26" # Linux 2.6/3.x/4.x/5.x Kernel
+  os_variant = "ubuntu24.04"
 
   # VM System Settings
   qemu_agent = true
@@ -58,7 +67,8 @@ source "proxmox-iso" "ubuntu-server-noble" {
     efi_type          = "4m"
   }
 
-
+  # BIOS Settings
+  bios = "ovmf"
 
   # VM CPU Settings
   cores = "2"
@@ -73,10 +83,17 @@ source "proxmox-iso" "ubuntu-server-noble" {
     firewall = "false"
   }
 
+  # VM Random Number Generator Settings
+  rng0 {
+    source    = "/dev/urandom"
+    max_bytes = 1024
+    period    = 1000
+  }
+
   # VM Cloud-Init Settings
   cloud_init              = true
   cloud_init_storage_pool = "local-lvm"
-  cloud_init_disk_type = "scsi"
+  cloud_init_disk_type    = "scsi"
 
   # PACKER Boot Commands
   boot         = "c"
@@ -148,7 +165,8 @@ build {
   provisioner "shell" {
     inline = [
       "sudo cp /tmp/99-pve.cfg /etc/cloud/cloud.cfg.d/99-pve.cfg",
-      "sudo mv /tmp/txmoose_chain.pem /usr/local/share/ca-certificates",
+      "sudo mv /tmp/txmoose_chain.pem /usr/local/share/ca-certificates/txmoose_chain.crt",
+      "sudo apt install -y ca-certificates",
       "sudo update-ca-certificates",
       "sudo sync"
     ]
