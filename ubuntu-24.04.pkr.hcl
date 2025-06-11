@@ -44,7 +44,6 @@ source "proxmox-iso" "ubuntu-server-noble" {
 
   # VM OS Type Settings
   os_type    = "l26" # Linux 2.6/3.x/4.x/5.x Kernel
-  os_variant = "ubuntu24.04"
 
   # VM System Settings
   qemu_agent = true
