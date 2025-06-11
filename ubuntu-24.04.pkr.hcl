@@ -29,7 +29,7 @@ source "proxmox-iso" "ubuntu-server-noble" {
   vm_name              = "tmpl-ubuntu-2404"
   template_name        = "tmpl-ubuntu-2404"
   template_description = "Ubuntu Server Noble Image"
-  tags                 = ["template"]
+  tags                 = "template"
 
   # VM OS Settings
   boot_iso {
@@ -43,7 +43,7 @@ source "proxmox-iso" "ubuntu-server-noble" {
   cpu_type = "host" # Use the host CPU type for better performance
 
   # VM OS Type Settings
-  os_type    = "l26" # Linux 2.6/3.x/4.x/5.x Kernel
+  os = "l26" # Linux 2.6/3.x/4.x/5.x Kernel
 
   # VM System Settings
   qemu_agent = true
